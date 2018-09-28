@@ -1,0 +1,107 @@
+.dhadi-box{
+    position: relative;
+    margin: 0 0 0 10em;
+}
+.flex{
+    display: flex;       
+}
+.flex-column{
+flex-basis: 50%;
+height: 100px;
+border: 1px solid #ccc;
+
+}
+.defaultW{
+    height: 400px;
+    width: 400px;
+}
+.height-column{
+    height: 40em;
+    width: 40em;
+}
+.dye{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    z-index: 9999;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #c2c2c2;
+}
+.dyeMain{
+    @extend .dye;    
+    background-color: #ee5566 !important;
+
+}
+.dye1{
+    @extend .dye;
+    
+    left: 46%;
+    top: -25px;
+}
+.dye2{
+    @extend .dye;
+    
+    left: 96%;
+    top: -25px;
+}
+.dye3{
+    @extend .dye;
+    
+    left: 46%;
+    top: 295px;
+}
+.dye4{
+    @extend .dye;
+    
+    left: 96%;
+    top: 295px;
+}
+.dye5{
+    @extend .dye;
+    
+    left: 96%;
+    top: 612px;
+}
+.dye6{
+    @extend .dye;
+    
+    left: 46%;
+    top: 612px;
+}
+.dye7{
+    @extend .dye;
+    
+    left: -20px;
+    top: 612px;
+}
+.dye8{
+    @extend .dye;
+    
+    left: -20px;
+    top: 295px;
+}
+.dye9{
+    @extend .dye;
+    
+    left: -20px;
+    top: -25px;
+}
+.diagnal{
+    border: 1px solid #ccc;
+    width: 133%;
+    position: absolute;
+    transform: rotate(45deg);
+    top: 321px;
+    right: -106px;
+}
+.diagnal2{
+    border: 1px solid #ccc;
+    width: 139%;
+    position: absolute;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(135deg);
+    top: 326px;
+    right: -119px;
+}
+
