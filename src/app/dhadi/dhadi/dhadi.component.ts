@@ -2,6 +2,8 @@ import { Component, OnInit, HostListener, ViewChild, ElementRef, Renderer, After
 import { DhadiService } from '../services/dhadi.service';
 import { DhadiDirective } from '../directives/dhadi.directive';
 import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
+import { User } from '../lib/dhadi';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-dhadi',
@@ -9,48 +11,66 @@ import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
   styleUrls: ['./dhadi.component.scss']
 })
 export class DhadiComponent implements OnInit, AfterViewInit {
+
   corners: Array<number> = [1,2,3,4,5,6,7,8,9]; 
-@ViewChild("dye") dye : TemplateRef<DhadiDirective>;
-@ViewChildren(DhadiDirective)  dhadiDire : QueryList<DhadiDirective>;
-isActive: boolean = false;
-  constructor( private el: ElementRef, private render: Renderer, private dhadiSer: DhadiService) { }
+  @ViewChild("dye") dye : TemplateRef<DhadiDirective>;
+  @ViewChildren(DhadiDirective) dhadiDire : QueryList<DhadiDirective>;
+  isActive: boolean = false;
+  users: User[];
+  successMsg: string = "";
+  constructor( 
+    private el: ElementRef,
+    private render: Renderer,
+    private dhadiSer: DhadiService,
+  private userSer: UserService) { }
 
   ngOnInit() {
+    this.users = this.userSer.getUsers();
+    this.userSer.successMsg.subscribe( msg => {
+      this.successMsg = msg;
+    })
+    this.dhadiSer.drag$.
+    subscribe( flag =>{
+      if(flag){
+        console.log(this.userSer.currentUserFlag);
+        this[this.userSer.currentUserFlag] = false;
+      }
+    });
+   } 
+ 
+  settleDye(pos){ }
   
-  } 
- // @HostListener('click', ['$event'])
-  settleDye(pos){
-//    console.log(e.clientX, e.clientY);
-console.log(this.dye)
-   // this.render.setElementStyle(this.dye.nativeElement, 'style', `left:${pos.x}; top: ${pos.y}`)
+  ngAfterViewInit(){
+    this.clickOnDhadi();
+    this.dhadiSer.drag$.subscribe( dir =>{
+      if(dir){
+        let m = this.dhadiDire.map(a => {  
+      //    console.log(a.currentDye , this.dhadiSer.previousDye)
+        if(a.currentDye == this.dhadiSer.previousDye){
+          a[this.userSer.currentUserFlag] = false;
+        }
+      });
+      }
+    })
   }
-  
-ngAfterViewInit(){
-this.clickOnDhadi()
-
-}
 //@HostListener('click', ['$event'])
+
+
 clickOnDhadi(){
   console.log(this.dhadiDire)
   
   this.dhadiSer.dye.subscribe(pos =>{
     if(!pos) return false;
     console.log(pos); 
-    let m = this.dhadiDire.map(a => {
-      if(pos == a){
-       
-        a.isActive = true;
-
-      }else{
-        a.isActive = false;
-
+    let m = this.dhadiDire.map(a => {      
+     let str = this.userSer.currentUserFlag;
+      if(pos == a && this.userSer.currentUserDyeCount > 0){     
+        a[str] = true;
+        this.userSer.updateCurrentUserDyeCount();
+        this.userSer.swapUser();
       }
     }); 
-  //  console.log(m.createEmbededView)
-  
-    /* let part = this.el.nativeElement.querySelector('#dyeMain');
-    this.render.setElementStyle(part, 'left', `${pos.x}px`);
-    this.render.setElementStyle(part, 'top', `${pos.y}px`);  */
+   
   });
 }
 

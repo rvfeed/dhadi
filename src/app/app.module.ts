@@ -11,7 +11,8 @@ import { ExtraService } from './services/extra.service'
 import { TestService } from './services/test.service'
 import { HttpClientModule } from '@angular/common/http';
 import { InnerComponent } from './contactus/inner/inner.component';
-import { DhadiModule } from './dhadi/dhadi.module'
+import { DhadiModule } from './dhadi/dhadi.module';
+
 export const routes : Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent, resolve: { res: Sadhinchu}},
@@ -27,7 +28,8 @@ export const routes : Routes = [
     HeaderComponent,
     AboutusComponent,
     ContactusComponent,
-    InnerComponent
+    InnerComponent,
+
     
   ],
   imports: [

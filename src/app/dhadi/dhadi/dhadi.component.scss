@@ -104,4 +104,19 @@ border: 1px solid #ccc;
     top: 326px;
     right: -119px;
 }
-
+.user{
+    @extend .dye;
+    position: relative;
+   
+}
+.user1{
+    background-color: #FF0000;
+}
+.user2{
+    background-color: #00FF00;
+}
+.user .span{
+   // color: white;
+    font-size: 15px;
+    margin: auto;
+}

@@ -4,6 +4,8 @@ import { DhadiComponent } from './dhadi/dhadi.component';
 import { Routes, RouterModule } from '@angular/router';
 import { DhadiDirective } from './directives/dhadi.directive';
 import { DhadiService } from './services/dhadi.service';
+import { DyeDirective } from './directives/dye.directive'
+import { UserService } from './services/user.service';
 const dhadiRoutes: Routes = [
   { path: 'dhadi', component: DhadiComponent}
 ]
@@ -13,7 +15,7 @@ const dhadiRoutes: Routes = [
     RouterModule.forChild(dhadiRoutes)
   ],
   exports: [RouterModule],
-  declarations: [DhadiComponent, DhadiDirective],
-  providers: [DhadiService]
+  declarations: [DhadiComponent, DyeDirective, DhadiDirective],
+  providers: [DhadiService, UserService]
 })
 export class DhadiModule { }

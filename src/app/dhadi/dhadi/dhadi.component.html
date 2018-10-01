@@ -1,13 +1,19 @@
+<div class="alert-success">{{successMsg}}</div>
+<ng-container  *ngFor="let user of users" >
+<div *ngIf="user.dyeCount>0"[class]="user.color">
+  <span>{{user.dyeCount}}</span>
+</div>
+</ng-container>
 <div class="row height-column dhadi-box">
   <div class="col-6 card h-50"></div>
   <div class="col-6 card h-50"></div>
   <div class="col-6 card h-50"></div>
   <div class="col-6 card h-50"></div>
 
-  <div *ngFor="let cls of corners" class="dye dye{{cls}}" appDhadi></div>
+  <div *ngFor="let cls of corners" id="{{cls}}" class="dye dye{{cls}}"
+   [appDhadi]="cls" [innerText]="cls" draggable="true"></div>
 <div class="diagnal"></div>
 <div class="diagnal2"></div>
 </div>
-<div class="dyeMain"></div>
-<div class="dyeMain"></div>
-<div class="dyeMain"></div>
+
+
