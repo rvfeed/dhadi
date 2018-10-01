@@ -6,6 +6,7 @@ import { DhadiDirective } from './directives/dhadi.directive';
 import { DhadiService } from './services/dhadi.service';
 import { DyeDirective } from './directives/dye.directive'
 import { UserService } from './services/user.service';
+import { SocketService } from './services/socket.service';
 const dhadiRoutes: Routes = [
   { path: 'dhadi', component: DhadiComponent}
 ]
@@ -16,6 +17,6 @@ const dhadiRoutes: Routes = [
   ],
   exports: [RouterModule],
   declarations: [DhadiComponent, DyeDirective, DhadiDirective],
-  providers: [DhadiService, UserService]
+  providers: [DhadiService, UserService,SocketService]
 })
 export class DhadiModule { }

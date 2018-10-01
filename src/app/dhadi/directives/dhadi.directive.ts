@@ -22,11 +22,12 @@ active = false;
 
 ngOnInit(){
   console.log(this.currentUser)
+ // this.dyeSer.socketConnect.subscribe(console.log)
 }
 
 @HostListener('click', ['$event'])
 settleDye(e){
-
+this.dyeSer.sendMsg(this.userSer.currentUserObj.name)
   if(this.userSer.currentUserDyeCount <= 0)
       return false;
   this.currentUser = this.userSer.currentUser;

@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { DhadiDirective } from '../directives/dhadi.directive';
+import { SocketService } from './socket.service';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/operator/map'
 type dyePostions = {
   x: number;
   y: number;
@@ -16,8 +19,11 @@ export class DhadiService {
   public currentDye = 0;
   public previousDye = 0;
   public dragPrevDye = 0;
+  socketConnect : Subject<any>;
 public drag$ = this.drag.asObservable()
-  constructor() { }
+constructor(private socketSer: SocketService) {
+  this.socketConnect = <Subject<any>>this.socketSer.connect().map(a => a);
+ }
   getDye(d: DhadiDirective): void{
      this.dye.next(d)
   }
@@ -26,5 +32,8 @@ public drag$ = this.drag.asObservable()
   }
   dragPrevDyeO(d){
     this.dragPrev.next(d);
+  }
+  sendMsg(msg: string){
+    this.socketConnect.next(msg);
   }
 }
