@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, ViewChild, ElementRef, Renderer, After
 import { DhadiService } from '../services/dhadi.service';
 import { DhadiDirective } from '../directives/dhadi.directive';
 import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
-import { User } from '../lib/dhadi';
+import { User, SocketSendEvent } from '../lib/dhadi';
 import { UserService } from '../services/user.service';
 import { SocketService } from '../services/socket.service';
 
@@ -28,10 +28,11 @@ export class DhadiComponent implements OnInit, AfterViewInit {
 private socketSer: SocketService) { }
 
    ngOnInit() {
+     this.socketSer.sendMsg({eventName: 'login', payload: {username: sessionStorage.getItem('user')}})
      this.socketSer.socketConnect.subscribe(data =>{
        console.log("socket component", data);
        this.dhadiData = data;       
-        let user = data.users.filter( user => user.name == data.socketId)[0];
+        let user = data.payload.users.filter( user => user.name == data.socketId)[0];
         if(user){
           this.isActive = user.isActive;
         }

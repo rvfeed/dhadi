@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule} from '@angular/forms'
 import { RouterModule, Routes, Router } from '@angular/router'
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -12,9 +13,10 @@ import { TestService } from './services/test.service'
 import { HttpClientModule } from '@angular/common/http';
 import { InnerComponent } from './contactus/inner/inner.component';
 import { DhadiModule } from './dhadi/dhadi.module';
+import { LoginComponent } from './login/login.component';
 
 export const routes : Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: LoginComponent},
   {path: 'home', component: HomeComponent, resolve: { res: Sadhinchu}},
   {path: 'aboutus', component: AboutusComponent, outlet: 'side'},
   {path: 'contactus', component: ContactusComponent}  
@@ -29,12 +31,14 @@ export const routes : Routes = [
     AboutusComponent,
     ContactusComponent,
     InnerComponent,
+    LoginComponent,
 
     
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     DhadiModule,
     RouterModule.forRoot(routes)
   ],

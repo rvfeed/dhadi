@@ -3,6 +3,10 @@ interface IUser{
     dyeCount: number;
     finalPosition;
 }
+export type SocketSendEvent={
+eventName: string;
+payload: any
+}
 export class DhadiIndices{
     constructor(){}
     dhadiIndices = {

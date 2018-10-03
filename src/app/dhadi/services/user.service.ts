@@ -21,7 +21,7 @@ export class UserService {
         console.log("socket component", data);
         this.dhadiData = data;
         this._users = data.users;
-        this.currentUser = data.dhadiObj.currentUser;
+        this.currentUser = data.payload.currentUser;
       })
     }
   swapUser(){
@@ -49,7 +49,7 @@ export class UserService {
     return this.currentUserObj.finalPosition;
   }
   getUsers(){
-     this.socketSer.sendMsg("hellooooo")
+     this.socketSer.sendMsg({eventName: 'load', payload:''})
     return this._users;
   }
   async setUsers(users){

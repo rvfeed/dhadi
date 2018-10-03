@@ -7,7 +7,7 @@ import { DhadiService } from './services/dhadi.service';
 import { DyeDirective } from './directives/dye.directive'
 import { UserService } from './services/user.service';
 import { SocketService } from './services/socket.service';
-const dhadiRoutes: Routes = [
+const dhadiRoutes: Routes = [  
   { path: 'dhadi', component: DhadiComponent}
 ]
 @NgModule({
