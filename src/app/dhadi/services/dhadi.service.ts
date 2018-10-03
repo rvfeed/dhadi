@@ -19,10 +19,10 @@ export class DhadiService {
   public currentDye = 0;
   public previousDye = 0;
   public dragPrevDye = 0;
-  socketConnect : Subject<any>;
+  
 public drag$ = this.drag.asObservable()
-constructor(private socketSer: SocketService) {
-  this.socketConnect = <Subject<any>>this.socketSer.connect().map(a => a);
+constructor() {
+  
  }
   getDye(d: DhadiDirective): void{
      this.dye.next(d)
@@ -33,7 +33,5 @@ constructor(private socketSer: SocketService) {
   dragPrevDyeO(d){
     this.dragPrev.next(d);
   }
-  sendMsg(msg: string){
-    this.socketConnect.next(msg);
-  }
+  
 }

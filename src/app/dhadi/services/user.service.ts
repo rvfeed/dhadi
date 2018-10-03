@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User, DhadiIndices } from '../lib/dhadi';
 import { DhadiService } from './dhadi.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { SocketService } from './socket.service';
 
 @Injectable()
 export class UserService {
@@ -11,7 +12,18 @@ export class UserService {
   _users: User[] = [new User("A", "user user1", true), new User("B", "user user2")];
   matchIndices: Array<number[]> = new DhadiIndices().winIndices;
   successMsg = new BehaviorSubject(null);
-  constructor(private dyeSer: DhadiService) { }
+  _currentUserObj: User;
+  dhadiData: any;
+  constructor(
+    private dyeSer: DhadiService, 
+    private socketSer: SocketService) { 
+      this.socketSer.socketConnect.subscribe(data =>{
+        console.log("socket component", data);
+        this.dhadiData = data;
+        this._users = data.users;
+        this.currentUser = data.dhadiObj.currentUser;
+      })
+    }
   swapUser(){
     let u = this.activeUsers;
       this.activeUsers = [u[0]-(u[0]-u[1]), u[1]-(u[1]-u[0])];
@@ -37,7 +49,11 @@ export class UserService {
     return this.currentUserObj.finalPosition;
   }
   getUsers(){
+     this.socketSer.sendMsg("hellooooo")
     return this._users;
+  }
+  async setUsers(users){
+    this._users = users;
   }
   get currentUser(): number{
     return this._currentUser;
@@ -50,6 +66,9 @@ export class UserService {
   }
   get currentUserObj(): User{
     return this._users[this.currentUser-1];
+  }
+  set currentUserObj(userObj){
+     this._currentUserObj = userObj;
   }
   get currentUserDyeCount(){
     return this.currentUserObj.dyeCount;

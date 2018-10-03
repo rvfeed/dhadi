@@ -2,6 +2,7 @@ import { Directive, HostBinding, HostListener, ElementRef, ViewChild, Renderer, 
 import { DhadiService } from '../services/dhadi.service';
 import 'rxjs/add/operator/debounceTime'
 import { UserService } from '../services/user.service';
+import { SocketService } from '../services/socket.service';
 
 @Directive({
   selector: '[appDhadi]'
@@ -16,7 +17,8 @@ active = false;
     private render: Renderer, 
     private dyeSer: DhadiService,
     public viewCont: ViewContainerRef,
-    private userSer: UserService) {
+    private userSer: UserService,
+  private socketSer: SocketService) {
 
      }
 
@@ -27,11 +29,10 @@ ngOnInit(){
 
 @HostListener('click', ['$event'])
 settleDye(e){
-this.dyeSer.sendMsg(this.userSer.currentUserObj.name)
   if(this.userSer.currentUserDyeCount <= 0)
       return false;
   this.currentUser = this.userSer.currentUser;
-  this.userSer.userPosition = this.currentDye; 
+  //this.userSer.userPosition = this.currentDye; 
   this.active = true;
   this.dyeSer.getDye(this);
 }

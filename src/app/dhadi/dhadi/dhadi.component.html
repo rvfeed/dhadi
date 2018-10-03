@@ -4,7 +4,8 @@
   <span>{{user.dyeCount}}</span>
 </div>
 </ng-container>
-<div class="row height-column dhadi-box">
+{{isActive}}
+<div class="row height-column dhadi-box" [class.disable]="!isActive">
   <div class="col-6 card h-50"></div>
   <div class="col-6 card h-50"></div>
   <div class="col-6 card h-50"></div>

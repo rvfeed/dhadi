@@ -4,6 +4,7 @@ import { DhadiDirective } from '../directives/dhadi.directive';
 import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
 import { User } from '../lib/dhadi';
 import { UserService } from '../services/user.service';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-dhadi',
@@ -18,14 +19,25 @@ export class DhadiComponent implements OnInit, AfterViewInit {
   isActive: boolean = false;
   users: User[];
   successMsg: string = "";
+  dhadiData: any;
   constructor( 
     private el: ElementRef,
     private render: Renderer,
     private dhadiSer: DhadiService,
-  private userSer: UserService) { }
+  private userSer: UserService,
+private socketSer: SocketService) { }
 
-  ngOnInit() {
-    this.users = this.userSer.getUsers();
+   ngOnInit() {
+     this.socketSer.socketConnect.subscribe(data =>{
+       console.log("socket component", data);
+       this.dhadiData = data;       
+        let user = data.users.filter( user => user.name == data.socketId)[0];
+        if(user){
+          this.isActive = user.isActive;
+        }
+     })
+    this.userSer.getUsers();
+    console.log(this.users)
     this.userSer.successMsg.subscribe( msg => {
       this.successMsg = msg;
     })
@@ -60,12 +72,20 @@ clickOnDhadi(){
   console.log(this.dhadiDire)
   
   this.dhadiSer.dye.subscribe(pos =>{
+   
     if(!pos) return false;
-    console.log(pos); 
-    let m = this.dhadiDire.map(a => {      
+    console.log(pos);
+    console.log(this.dhadiData)
+    let m = this.dhadiDire.map(a => {
      let str = this.userSer.currentUserFlag;
       if(pos == a && this.userSer.currentUserDyeCount > 0){     
         a[str] = true;
+        console.log(a)
+        
+        this.socketSer.sendMsg({eventName: 'clickedOnDye', payload: {
+            currentDye: a.currentDye
+          }
+        })
         this.userSer.updateCurrentUserDyeCount();
         this.userSer.swapUser();
       }
