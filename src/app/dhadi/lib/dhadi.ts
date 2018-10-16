@@ -3,10 +3,10 @@ interface IUser{
     dyeCount: number;
     finalPosition;
 }
-export type SocketSendEvent={
-eventName: string;
-payload: any
-}
+export type eventFormat = {
+    eventName: string,
+    payload: any
+  }
 export class DhadiIndices{
     constructor(){}
     dhadiIndices = {
@@ -36,9 +36,10 @@ export class User extends DhadiIndices implements IUser {
     readonly maxDyeCount = 3;
     dyeCount: number = 3;
     previousDye: number = 0;
+    win:boolean = false;
     isActive: boolean = false;
     private  _position: number = 0;
-    private _finalPosition: Array<number> = []
+    public _finalPosition: Array<number> = []
     color: string = "#ff0000";
     constructor(name, color, isActive = false){
         super();

@@ -7,12 +7,14 @@ import { DhadiService } from './services/dhadi.service';
 import { DyeDirective } from './directives/dye.directive'
 import { UserService } from './services/user.service';
 import { SocketService } from './services/socket.service';
-const dhadiRoutes: Routes = [  
+import { FormsModule } from '@angular/forms';
+const dhadiRoutes: Routes = [
   { path: 'dhadi', component: DhadiComponent}
 ]
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(dhadiRoutes)
   ],
   exports: [RouterModule],

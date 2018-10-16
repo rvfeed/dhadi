@@ -4,7 +4,10 @@
   <span>{{user.dyeCount}}</span>
 </div>
 </ng-container>
-{{isActive}}
+{{userId}}: {{isActive}}
+<!-- <input type="text" class="form-control col-2" name="username" [(ngModel)]="username">
+<input type="button" value="Save" (click)="storeUserName(this.username)"> -->
+<div class="dye {{currentUser}}"></div>
 <div class="row height-column dhadi-box" [class.disable]="!isActive">
   <div class="col-6 card h-50"></div>
   <div class="col-6 card h-50"></div>

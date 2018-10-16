@@ -23,7 +23,7 @@ active = false;
      }
 
 ngOnInit(){
-  console.log(this.currentUser)
+ 
  // this.dyeSer.socketConnect.subscribe(console.log)
 }
 
@@ -31,7 +31,7 @@ ngOnInit(){
 settleDye(e){
   if(this.userSer.currentUserDyeCount <= 0)
       return false;
-  this.currentUser = this.userSer.currentUser;
+  //this.currentUser = this.userSer.currentUser;
   //this.userSer.userPosition = this.currentDye; 
   this.active = true;
   this.dyeSer.getDye(this);
@@ -45,31 +45,47 @@ allowDrop(ev) {
 
 @HostListener("dragstart", ["$event"])
  drag(ev) {
-   console.log(this[this.userSer.currentUserFlag])
-   console.log((this.currentUser != this.userSer.currentUser) || !this.active)
+   console.log("this.currentUser", this.currentUser)
+   console.log(" this.userSer.currentUser",  this.userSer.currentUser)
+   console.log(" this.userSer.currentUser",  this.userSer.currentUser)
+   console.log(" this.active",  this.active)
+   console.log(" this.userSer.currentUserDyeCount",  this.userSer.currentUserDyeCount)
+  
+   if(this.currentDye)
    if(
     !this[this.userSer.currentUserFlag] && ( 
-    (this.currentUser != this.userSer.currentUser) ||      
+        
       !this.active || 
-      this.userSer.currentUserDyeCount != 0)) {
+      this.userSer.currentUserDyeCount > 0)) {
         return false;
    }    
   this.active = false;
+  
   console.log("grag>>> "+this.currentDye)
   this.dyeSer.previousDye = this.currentDye;
 }
 @HostListener("drop", ["$event"])
  drop(ev) {
     ev.preventDefault();
+    console.log(this.dyeSer.dhadiIndices);
+    let indices = this.dyeSer.dhadiIndices;
+    console.log("!indices[this.dyeSer.previousDye].includes(this.currentDye)", !indices[this.dyeSer.previousDye].includes(this.currentDye))
+    if(this.dyeSer.activeDyes.includes(this.currentDye)){
+      return false;
+    }
+    if(!indices[this.dyeSer.previousDye].includes(this.currentDye)){
+      return false;
+    }
+  
     this.active = true;
-    this.currentUser = this.userSer.currentUser;
+   // this.currentUser = this.userSer.currentUser;
     console.log(this.currentDye)
-    this.userSer.userPosition = this.currentDye; 
-    this.dyeSer.dragDye(true);
+   // this.userSer.userPosition = this.currentDye; 
+    this.dyeSer.dragDye(this.currentDye);
     //this.dye
     this[this.userSer.currentUserFlag] = true;
     
-    this.userSer.swapUser();
+   // this.userSer.swapUser();
     console.log(this.userSer.currentUser);
   }
 }

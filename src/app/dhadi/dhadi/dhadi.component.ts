@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, ViewChild, ElementRef, Renderer, After
 import { DhadiService } from '../services/dhadi.service';
 import { DhadiDirective } from '../directives/dhadi.directive';
 import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
-import { User, SocketSendEvent } from '../lib/dhadi';
+import { User } from '../lib/dhadi';
 import { UserService } from '../services/user.service';
 import { SocketService } from '../services/socket.service';
 
@@ -20,6 +20,10 @@ export class DhadiComponent implements OnInit, AfterViewInit {
   users: User[];
   successMsg: string = "";
   dhadiData: any;
+  userData: User[];
+  userId: string;
+  username: string;
+  currentUser: string = null;
   constructor( 
     private el: ElementRef,
     private render: Renderer,
@@ -28,11 +32,40 @@ export class DhadiComponent implements OnInit, AfterViewInit {
 private socketSer: SocketService) { }
 
    ngOnInit() {
-     this.socketSer.sendMsg({eventName: 'login', payload: {username: sessionStorage.getItem('user')}})
      this.socketSer.socketConnect.subscribe(data =>{
        console.log("socket component", data);
-       this.dhadiData = data;       
-        let user = data.payload.users.filter( user => user.name == data.socketId)[0];
+       this.dhadiData = data.dhadiData;
+     this.dhadiSer.dhadiIndices = data.dhadiIndices;
+      this.userData = data.users;
+        let user = this.userData.filter( user => user.name == data.socketId)[0];
+        if(data.winner){
+          if(data.winner == data.socketId){
+            this.successMsg = "Hurrey!!!! You Have Won the Game!";
+          } else{
+            this.successMsg = "Oops!! You Lost the Game";
+          }
+          this.isActive = false;
+        }
+        this.userSer.currentUserDyeCount = user.dyeCount;
+        this.userSer.currentUser = this.currentUser = user.color;
+        let activeIndices = [];
+        this.userData.forEach( user => {
+            activeIndices = activeIndices.concat(user._finalPosition);
+          let m = this.dhadiDire.map(a => {  
+          let str = user.color+"Active";
+          a[str] = false;
+            if(user._finalPosition.includes(a.currentDye)){
+             
+              a[str] = true;
+            }
+         /*     if(a.currentDye == this.dhadiSer.previousDye){
+                a[this.userSer.currentUserFlag] = false;
+              }*/
+            });
+        })
+        this.dhadiSer.activeDyes = activeIndices;
+        console.log(user)
+        this.userId = user.name.substr(-4, 4);
         if(user){
           this.isActive = user.isActive;
         }
@@ -55,19 +88,24 @@ private socketSer: SocketService) { }
   
   ngAfterViewInit(){
     this.clickOnDhadi();
-    this.dhadiSer.drag$.subscribe( dir =>{
-      if(dir){
-        let m = this.dhadiDire.map(a => {  
+    this.dhadiSer.drag$.subscribe( currentDye =>{
+      if(currentDye){
+        let previousDye = this.dhadiSer.previousDye;
+        this.socketSer.sendMsg({eventName: "drag", payload: {previousDye, currentDye}})
+       /*  let m = this.dhadiDire.map(a => {  
       //    console.log(a.currentDye , this.dhadiSer.previousDye)
         if(a.currentDye == this.dhadiSer.previousDye){
-          a[this.userSer.currentUserFlag] = false;
-        }
+         // a[this.userSer.currentUserFlag] = false;
+        } */
+      }
       });
       }
-    })
-  }
+  
+  
 //@HostListener('click', ['$event'])
-
+storeUserName(){
+  console.log(this.username)
+}
 
 clickOnDhadi(){
   console.log(this.dhadiDire)
@@ -80,15 +118,15 @@ clickOnDhadi(){
     let m = this.dhadiDire.map(a => {
      let str = this.userSer.currentUserFlag;
       if(pos == a && this.userSer.currentUserDyeCount > 0){     
-        a[str] = true;
+      //  a[str] = true;
         console.log(a)
         
         this.socketSer.sendMsg({eventName: 'clickedOnDye', payload: {
             currentDye: a.currentDye
           }
         })
-        this.userSer.updateCurrentUserDyeCount();
-        this.userSer.swapUser();
+    //    this.userSer.updateCurrentUserDyeCount();
+      //  this.userSer.swapUser();
       }
     }); 
    
