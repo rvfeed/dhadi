@@ -8,7 +8,7 @@
 <!-- <input type="text" class="form-control col-2" name="username" [(ngModel)]="username">
 <input type="button" value="Save" (click)="storeUserName(this.username)"> -->
 <div class="dye {{currentUser}}"></div>
-<div class="row height-column dhadi-box" [class.disable]="!isActive">
+<div style="display: none" class="row height-column dhadi-box" [class.disable]="!isActive">
   <div class="col-6 card h-50"></div>
   <div class="col-6 card h-50"></div>
   <div class="col-6 card h-50"></div>
@@ -19,5 +19,37 @@
 <div class="diagnal"></div>
 <div class="diagnal2"></div>
 </div>
+<div class="container">
+<svg [attr.height]="dhadiSvgCord.height" [attr.width]="dhadiSvgCord.width">
+  <line [attr.x1]="dhadiSvgCord.min"  [attr.y1]="dhadiSvgCord.min"  [attr.x2]="dhadiSvgCord.max"  [attr.y2]="dhadiSvgCord.max" style="stroke:rgb(255,0,0);stroke-width:2" />
+  <line [attr.x1]="dhadiSvgCord.min"  [attr.y1]="dhadiSvgCord.max"  [attr.x2]="dhadiSvgCord.max"  [attr.y2]="dhadiSvgCord.min" style="stroke:rgb(255,0,0);stroke-width:2" />
+  <line [attr.x1]="dhadiSvgCord.min"  [attr.y1]="dhadiSvgCord.min"  [attr.x2]="dhadiSvgCord.min"  [attr.y2]="dhadiSvgCord.max" style="stroke:rgb(255,0,0);stroke-width:4" />
+   <line [attr.x1]="dhadiSvgCord.max"  [attr.y1]="dhadiSvgCord.min"  [attr.x2]="dhadiSvgCord.max"  [attr.y2]="dhadiSvgCord.max" style="stroke:rgb(255,0,0);stroke-width:2" />
+   <line [attr.x1]="dhadiSvgCord.min"  [attr.y1]="dhadiSvgCord.min"  [attr.x2]="dhadiSvgCord.max"  [attr.y2]="dhadiSvgCord.min" style="stroke:rgb(255,0,0);stroke-width:4" />
+   <line [attr.x1]="dhadiSvgCord.min"  [attr.y1]="dhadiSvgCord.max"  [attr.x2]="dhadiSvgCord.max"  [attr.y2]="dhadiSvgCord.max" style="stroke:rgb(255,0,0);stroke-width:2" />
+   <line [attr.x1]="dhadiSvgCord.max"  [attr.y1]="dhadiSvgCord.min"  [attr.x2]="dhadiSvgCord.max"  [attr.y2]="dhadiSvgCord.max" style="stroke:rgb(255,0,0);stroke-width:2" />
+  
+   <line [attr.x1]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2"  [attr.y1]="dhadiSvgCord.min" 
+    [attr.x2]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2"  [attr.y2]="dhadiSvgCord.max" style="stroke:rgb(255,0,0);stroke-width:2" />
+   
+   <line [attr.x1]="dhadiSvgCord.min"  [attr.y1]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2" 
+     [attr.y2]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2"  [attr.x2]="dhadiSvgCord.max" style="stroke:rgb(255,0,0);stroke-width:2" />
+       <g stroke="black" stroke-width="1" fill="white">
+        <circle id="pointA" class="defaultuser" [attr.fill]="dyeColor.default" draggable="true" [appDhadi]="1" [attr.cx]="dhadiSvgCord.min" [attr.cy]="dhadiSvgCord.min" [attr.r]="dhadiSvgCord.radius" />
+        <circle id="pointA"  [attr.fill]="dyeColor.default" [appDhadi]="2" draggable="true" [attr.cx]="dhadiSvgCord.min" [attr.cy]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2" [attr.r]="dhadiSvgCord.radius" />
+        <circle id="pointA" [attr.fill]="dyeColor.default" [appDhadi]="3" draggable="true" [attr.cx]="dhadiSvgCord.min" [attr.cy]="dhadiSvgCord.max" [attr.r]="dhadiSvgCord.radius" />
 
+        <circle id="pointA" [attr.fill]="dyeColor.default" [appDhadi]="4" draggable="true" [attr.cx]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2" [attr.cy]="dhadiSvgCord.min" [attr.r]="dhadiSvgCord.radius" />
+        <circle id="pointA"  [attr.fill]="dyeColor.default" [appDhadi]="5"draggable="true" [attr.cx]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2" [attr.cy]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2" [attr.r]="dhadiSvgCord.radius" />
+        <circle id="pointA" [attr.fill]="dyeColor.default" [appDhadi]="6" draggable="true" [attr.cx]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2" [attr.cy]="dhadiSvgCord.max" [attr.r]="dhadiSvgCord.radius" />
+
+        <circle id="pointA" [attr.fill]="dyeColor.default" [appDhadi]="7" draggable="true" [attr.cx]="dhadiSvgCord.max" [attr.cy]="dhadiSvgCord.min" [attr.r]="dhadiSvgCord.radius" />
+        <circle id="pointA" [attr.fill]="dyeColor.default" [appDhadi]="8" draggable="true" [attr.cx]="dhadiSvgCord.max" [attr.cy]="(dhadiSvgCord.offset+dhadiSvgCord.max)/2" [attr.r]="dhadiSvgCord.radius" />
+        <circle id="pointA" [attr.fill]="dyeColor.default" [appDhadi]="9"draggable="true"  [attr.cx]="dhadiSvgCord.max" [attr.cy]="dhadiSvgCord.max" [attr.r]="dhadiSvgCord.radius" />
+
+       </g>
+  Sorry, your browser does not support inline SVG.
+</svg>
+
+</div>
 

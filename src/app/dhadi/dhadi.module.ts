@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DhadiComponent } from './dhadi/dhadi.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -19,6 +19,7 @@ const dhadiRoutes: Routes = [
   ],
   exports: [RouterModule],
   declarations: [DhadiComponent, DyeDirective, DhadiDirective],
-  providers: [DhadiService, UserService,SocketService]
+  providers: [DhadiService, UserService,SocketService],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class DhadiModule { }

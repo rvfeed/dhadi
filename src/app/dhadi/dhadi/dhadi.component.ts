@@ -12,11 +12,14 @@ import { SocketService } from '../services/socket.service';
   styleUrls: ['./dhadi.component.scss']
 })
 export class DhadiComponent implements OnInit, AfterViewInit {
-
+isDraggable: boolean = true;
   corners: Array<number> = [1,2,3,4,5,6,7,8,9]; 
   @ViewChild("dye") dye : TemplateRef<DhadiDirective>;
   @ViewChildren(DhadiDirective) dhadiDire : QueryList<DhadiDirective>;
   isActive: boolean = false;
+  dhadiSvgCord: any = { height: 800, width: 800, offset: 55, min: 55, max: 600, radius: 50}
+  dyeColor: any = {default: 'white', selected: 'red'}
+  /* dhadiSvgCord: any = { offset: 35, x1Min: 35,  x1Max: 400, y1Min: 35, y1Max: 400, x2Min: 35, x2Max: 400,  y2Min: 35, y2Max: 400} */
   users: User[];
   successMsg: string = "";
   dhadiData: any;
