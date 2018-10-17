@@ -24,7 +24,7 @@ this.socketConnect.next(msg);
   connect(): Subject<MessageEvent> {
     // If you aren't familiar with environment variables then
     // you can hard code `environment.ws_url` as `http://localhost:5000`
-    this.socket = io('http://localhost:3001');
+    this.socket = io('http://localhost:3000');
  //       console.log(this.socket.emit("message", "hello"))
  
         this.socket.on('message', (userData) =>{

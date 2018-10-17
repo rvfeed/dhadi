@@ -13,6 +13,7 @@ import { TestService } from './services/test.service'
 import { HttpClientModule } from '@angular/common/http';
 import { InnerComponent } from './contactus/inner/inner.component';
 import { DhadiModule } from './dhadi/dhadi.module';
+import { LoginComponent } from './login/login.component';
 
 export const routes : Routes = [
   {path: '', component: HomeComponent},
@@ -30,7 +31,7 @@ export const routes : Routes = [
     AboutusComponent,
     ContactusComponent,
     InnerComponent,
-
+LoginComponent
     
   ],
   imports: [
@@ -38,7 +39,7 @@ export const routes : Routes = [
     HttpClientModule,
     FormsModule,
     DhadiModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {useHash: true})
   ],
   providers: [Sadhinchu, ExtraService,TestService],
   bootstrap: [AppComponent]
